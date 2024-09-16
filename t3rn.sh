@@ -2,6 +2,7 @@
 
 # 脚本保存路径
 SCRIPT_PATH="$HOME/t3rn.sh"
+LOGFILE="$HOME/executor/executor.log"
 
 # 检查是否以 root 用户运行脚本
 if [ "$(id -u)" != "0" ]; then
@@ -20,15 +21,19 @@ function main_menu() {
         echo "退出脚本，请按键盘 ctrl + C 退出即可"
         echo "请选择要执行的操作:"
         echo "1) 执行脚本"
-        echo "2) 退出"
+        echo "2) 查看日志"
+        echo "3) 退出"
         
-        read -p "请输入你的选择 [1-2]: " choice
+        read -p "请输入你的选择 [1-3]: " choice
         
         case $choice in
             1)
                 execute_script
                 ;;
             2)
+                view_logs
+                ;;
+            3)
                 echo "退出脚本。"
                 exit 0
                 ;;
@@ -93,9 +98,32 @@ function execute_script() {
     # 切换目录并执行脚本
     echo "切换目录并执行 ./executor..."
     cd ~/executor/executor/bin
-    ./executor
+
+    # 重定向日志输出
+    ./executor > "$LOGFILE" 2>&1 &
+
+    # 显示后台进程 PID
+    echo "executor 进程已启动，PID: $!"
 
     echo "操作完成。"
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
+}
+
+# 查看日志函数
+function view_logs() {
+    if [ -f "$LOGFILE" ]; then
+        echo "显示日志文件内容（最后 50 行）："
+        tail -n 50 "$LOGFILE"
+    else
+        echo "日志文件不存在。"
+    fi
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
 }
 
 # 启动主菜单
