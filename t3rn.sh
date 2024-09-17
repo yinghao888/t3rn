@@ -3,6 +3,7 @@
 # 脚本保存路径
 SCRIPT_PATH="$HOME/t3rn.sh"
 LOGFILE="$HOME/executor/executor.log"
+EXECUTOR_DIR="$HOME/executor"
 
 # 检查是否以 root 用户运行脚本
 if [ "$(id -u)" != "0" ]; then
@@ -22,9 +23,10 @@ function main_menu() {
         echo "请选择要执行的操作:"
         echo "1) 执行脚本"
         echo "2) 查看日志"
-        echo "3) 退出"
+        echo "3) 删除节点"
+        echo "4) 退出"
         
-        read -p "请输入你的选择 [1-3]: " choice
+        read -p "请输入你的选择 [1-4]: " choice
         
         case $choice in
             1)
@@ -34,6 +36,9 @@ function main_menu() {
                 view_logs
                 ;;
             3)
+                delete_node
+                ;;
+            4)
                 echo "退出脚本。"
                 exit 0
                 ;;
@@ -120,6 +125,29 @@ function view_logs() {
     else
         echo "日志文件不存在。"
     fi
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
+}
+
+# 删除节点函数
+function delete_node() {
+    echo "正在停止节点进程..."
+
+    # 查找 executor 进程并终止
+    pkill -f executor
+
+    # 删除节点目录
+    if [ -d "$EXECUTOR_DIR" ]; then
+        echo "正在删除节点目录..."
+        rm -rf "$EXECUTOR_DIR"
+        echo "节点目录已删除。"
+    else
+        echo "节点目录不存在，可能已被删除。"
+    fi
+
+    echo "节点删除操作完成。"
 
     # 提示用户按任意键返回主菜单
     read -n 1 -s -r -p "按任意键返回主菜单..."
