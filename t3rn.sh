@@ -53,7 +53,7 @@ function main_menu() {
 function execute_script() {
     # 下载文件
     echo "正在下载 executor-linux-v0.21.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.21.0/executor-linux-v0.21.0.tar.gz
+    wget https://github.com/t3rn/executor-release/releases/download/v0.21.1/executor-linux-v0.21.1.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
