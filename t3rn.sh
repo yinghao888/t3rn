@@ -53,7 +53,7 @@ function main_menu() {
 function execute_script() {
     # 下载文件
     echo "正在下载 executor-linux-v0.21.1.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.21.1/executor-linux-v0.21.1.tar.gz
+    wget https://github.com/t3rn/executor-release/releases/download/v0.21.9/executor-linux-v0.21.9.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
@@ -98,7 +98,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.21.1.tar.gz
+    rm executor-linux-v0.21.9.tar.gz
 
     # 切换目录并执行脚本
     echo "切换目录并执行 ./executor..."
