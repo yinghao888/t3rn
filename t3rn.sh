@@ -65,7 +65,7 @@ function execute_script() {
 
     # 解压文件到当前目录
     echo "正在解压文件..."
-    tar -xvzf executor-linux-v0.21.1.tar.gz
+    tar -xvzf executor-linux-v0.21.9.tar.gz
 
     # 检查解压是否成功
     if [ $? -eq 0 ]; then
