@@ -121,7 +121,7 @@ function execute_script() {
 function view_logs() {
     if [ -f "$LOGFILE" ]; then
         echo "显示日志文件内容（最后 50 行）："
-        tail -n 50 "$LOGFILE"
+        tail -n 100 "$LOGFILE"
     else
         echo "日志文件不存在。"
     fi
