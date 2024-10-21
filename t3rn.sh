@@ -125,6 +125,7 @@ function view_logs() {
     else
         echo "日志文件不存在。"
     fi
+}
 
 # 删除节点函数
 function delete_node() {
