@@ -120,16 +120,11 @@ function execute_script() {
 # 查看日志函数
 function view_logs() {
     if [ -f "$LOGFILE" ]; then
-        echo "显示日志文件内容（最后 50 行）："
-        tail -n 100 "$LOGFILE"
+        echo "实时显示日志文件内容（按 Ctrl+C 退出）："
+        tail -f "$LOGFILE"  # 使用 tail -f 实时跟踪日志文件
     else
         echo "日志文件不存在。"
     fi
-
-    # 提示用户按任意键返回主菜单
-    read -n 1 -s -r -p "按任意键返回主菜单..."
-    main_menu
-}
 
 # 删除节点函数
 function delete_node() {
