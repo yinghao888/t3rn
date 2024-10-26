@@ -24,7 +24,8 @@ function main_menu() {
         echo "1) 执行脚本"
         echo "2) 查看日志"
         echo "3) 删除节点"
-        echo "4) 退出"
+        echo "4) 重启节点（领水后用）"
+        echo "5) 退出"
         
         read -p "请输入你的选择 [1-4]: " choice
         
@@ -39,6 +40,9 @@ function main_menu() {
                 delete_node
                 ;;
             4)
+                delete_node
+                ;;
+            5)
                 echo "退出脚本。"
                 exit 0
                 ;;
@@ -47,6 +51,30 @@ function main_menu() {
                 ;;
         esac
     done
+}
+
+# 重启节点函数
+function restart_node() {
+    echo "正在重启节点进程..."
+
+    # 查找 executor 进程并终止
+    pkill -f executor
+
+    # 切换目录并执行脚本
+    echo "切换目录并执行 ./executor..."
+    cd ~/executor/executor/bin
+
+    # 重定向日志输出
+    ./executor > "$LOGFILE" 2>&1 &
+
+    # 显示后台进程 PID
+    echo "executor 进程已重启，PID: $!"
+
+    echo "重启操作完成。"
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
 }
 
 # 执行脚本函数
