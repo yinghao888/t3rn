@@ -40,7 +40,7 @@ function main_menu() {
                 delete_node
                 ;;
             4)
-                delete_node
+                restart_node
                 ;;
             5)
                 echo "退出脚本。"
