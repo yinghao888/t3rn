@@ -64,6 +64,23 @@ function restart_node() {
     echo "切换目录并执行 ./executor..."
     cd ~/executor/executor/bin
 
+    # 设置环境变量
+    export NODE_ENV=testnet
+    export LOG_LEVEL=debug
+    export LOG_PRETTY=false
+    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
+
+    # 新增的环境变量
+    export EXECUTOR_PROCESS_ORDERS=true
+    export EXECUTOR_PROCESS_CLAIMS=true
+    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
+
+    # 提示用户输入私钥
+    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
+
+    # 设置私钥变量
+    export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
+
     # 重定向日志输出
     ./executor > "$LOGFILE" 2>&1 &
 
