@@ -73,7 +73,7 @@ function restart_node() {
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
-    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://endpoints.omniatech.io/v1/op/sepolia/public'
+    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
     export RPC_ENDPOINTS_ARBT='https://arbitrum-sepolia.blockpi.network/v1/rpc/public,https://arbitrum-sepolia.gateway.tenderly.co'
     export RPC_ENDPOINTS_BSSP='https://base-sepolia.gateway.tenderly.co,https://base-sepolia.blockpi.network/v1/rpc/public'
 
@@ -140,7 +140,7 @@ function execute_script() {
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
-    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://endpoints.omniatech.io/v1/op/sepolia/public'
+    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
     export RPC_ENDPOINTS_ARBT='https://arbitrum-sepolia.blockpi.network/v1/rpc/public,https://arbitrum-sepolia.gateway.tenderly.co'
     export RPC_ENDPOINTS_BSSP='https://base-sepolia.gateway.tenderly.co,https://base-sepolia.blockpi.network/v1/rpc/public'
 
