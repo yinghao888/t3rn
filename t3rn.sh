@@ -148,7 +148,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.21.10.tar.gz
+    rm executor-linux-v0.27.0.tar.gz
 
     # 切换目录并执行脚本
     echo "切换目录并执行 ./executor..."
