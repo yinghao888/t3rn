@@ -97,8 +97,8 @@ function restart_node() {
 # 执行脚本函数
 function execute_script() {
     # 下载文件
-    echo "正在下载 executor-linux-v0.22.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.27.0/executor-linux-v0.27.0.tar.gz
+    echo "正在下载 executor-linux-v0.29.0.tar.gz..."
+    wget https://github.com/t3rn/executor-release/releases/download/v0.29.0/executor-linux-v0.29.0.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
@@ -110,7 +110,7 @@ function execute_script() {
 
     # 解压文件到当前目录
     echo "正在解压文件..."
-    tar -xvzf executor-linux-v0.27.0.tar.gz
+    tar -xvzf executor-linux-v0.29.0.tar.gz
 
     # 检查解压是否成功
     if [ $? -eq 0 ]; then
@@ -134,6 +134,7 @@ function execute_script() {
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
     export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
+    export EXECUTOR_MAX_L3_GAS_PRICE=10
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
