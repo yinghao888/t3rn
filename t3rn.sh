@@ -134,11 +134,12 @@ function execute_script() {
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
     export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
-    export EXECUTOR_MAX_L3_GAS_PRICE=10
+    export EXECUTOR_MAX_L3_GAS_PRICE=100
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
+    export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
     export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
 
     # 提示用户输入私钥
@@ -149,7 +150,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.27.0.tar.gz
+    rm executor-linux-v0.29.0.tar.gz
 
     # 切换目录并执行脚本
     echo "切换目录并执行 ./executor..."
