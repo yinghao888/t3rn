@@ -98,7 +98,7 @@ function restart_node() {
 function execute_script() {
     # 下载文件
     echo "正在下载 executor-linux-v0.31.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.27.0/executor-linux-v0.31.0.tar.gz
+    wget https://github.com/t3rn/executor-release/releases/download/v0.31.0/executor-linux-v0.31.0.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
