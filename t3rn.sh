@@ -98,7 +98,7 @@ function restart_node() {
 function execute_script() {
     # 下载文件
     echo "正在下载 executor-linux-v0.30.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.30.0/executor-linux-v0.30.0.tar.gz
+    wget https://github.com/t3rn/executor-release/releases/download/v0.31.0/executor-linux-v0.31.0.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
@@ -110,7 +110,7 @@ function execute_script() {
 
     # 解压文件到当前目录
     echo "正在解压文件..."
-    tar -xvzf executor-linux-v0.30.0.tar.gz
+    tar -xvzf executor-linux-v0.31.0.tar.gz
 
     # 检查解压是否成功
     if [ $? -eq 0 ]; then
@@ -134,13 +134,13 @@ function execute_script() {
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
     export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
-    export EXECUTOR_MAX_L3_GAS_PRICE=100
+    export EXECUTOR_MAX_L3_GAS_PRICE=10
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
-    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
+    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public'
 
     # 提示用户输入私钥
     read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
@@ -150,7 +150,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.30.0.tar.gz
+    rm executor-linux-v0.31.0.tar.gz
 
     # 切换目录并执行脚本
     echo "切换目录并执行 ./executor..."
