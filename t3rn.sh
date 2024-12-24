@@ -69,7 +69,7 @@ function restart_node() {
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
     export ENABLED_NETWORKS='arbitrum-sepolia,optimism-sepolia,l1rn'
-    export EXECUTOR_MAX_L3_GAS_PRICE=10
+    export EXECUTOR_MAX_L3_GAS_PRICE=100
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
@@ -142,10 +142,35 @@ function execute_script() {
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
 
     # 提示用户输入私钥
-    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
+    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL 
 
-    # 设置私钥变量
-    export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
+    # 询问用户是否使用个人 RPC
+    read -p "是否使用个人 RPC? (y/n): " USE_CUSTOM_RPC
+
+    if [[ "$USE_CUSTOM_RPC" == "y" || "$USE_CUSTOM_RPC" == "Y" ]]; then
+    # 用户选择使用个人 RPC，分别输入每个网络的 RPC URL
+    echo "请输入每个网络的 RPC URL。"
+
+    read -p "请输入 arbitrum-sepolia 的 RPC URL: " ARBITRUM_RPC_URL
+    export RPC_ENDPOINT_ARBT=$ARBITRUM_RPC_URL
+
+    read -p "请输入 optimism-sepolia 的 RPC URL: " OPTIMISM_RPC_URL
+    export RPC_ENDPOINT_OPT=$OPTIMISM_RPC_URL
+
+    echo "已设置个人 RPC:"
+    echo "arbitrum-sepolia: $ARBITRUM_RPC_URL"
+    echo "optimism-sepolia: $OPTIMISM_RPC_URL"
+
+    else
+    # 如果不使用个人 RPC，可以设置默认的 RPC 地址
+    export RPC_ENDPOINT_ARBT='https://default-arbitrum-rpc.io'
+    export RPC_ENDPOINT_OPT='https://default-optimism-rpc.io'
+    echo "使用默认 RPC:"
+    echo "arbitrum-sepolia: $RPC_ENDPOINT_ARBT"
+    echo "optimism-sepolia: $RPC_ENDPOINT_OPT"
+    fi
+
+    echo "环境变量设置完毕。"
 
     # 删除压缩文件
     echo "删除压缩包..."
