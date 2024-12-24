@@ -141,9 +141,6 @@ function execute_script() {
     export EXECUTOR_PROCESS_CLAIMS=true
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=true
 
-    # 提示用户输入私钥
-    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL 
-
     # 询问用户是否使用个人 RPC
     read -p "是否使用个人 RPC? (y/n): " USE_CUSTOM_RPC
 
@@ -169,6 +166,9 @@ function execute_script() {
     echo "arbitrum-sepolia: $RPC_ENDPOINT_ARBT"
     echo "optimism-sepolia: $RPC_ENDPOINT_OPT"
     fi
+
+    # 提示用户输入私钥
+    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
 
     echo "环境变量设置完毕。"
 
