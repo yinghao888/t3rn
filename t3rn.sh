@@ -73,7 +73,6 @@ function restart_node() {
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
-    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
 
     # 提示用户输入私钥
     read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
@@ -138,7 +137,6 @@ function execute_script() {
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
-    export RPC_ENDPOINTS_OPSP='https://optimism-sepolia.blockpi.network/v1/rpc/public,https://api.zan.top/opt-sepolia'
 
     # 提示用户输入私钥
     read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
