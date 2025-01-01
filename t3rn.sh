@@ -24,10 +24,9 @@ function main_menu() {
         echo "1) 执行脚本"
         echo "2) 查看日志"
         echo "3) 删除节点"
-        echo "4) 重启节点（领水后用）"
         echo "5) 退出"
         
-        read -p "请输入你的选择 [1-4]: " choice
+        read -p "请输入你的选择 [1-3]: " choice
         
         case $choice in
             1)
@@ -38,9 +37,6 @@ function main_menu() {
                 ;;
             3)
                 delete_node
-                ;;
-            4)
-                restart_node
                 ;;
             5)
                 echo "退出脚本。"
@@ -53,52 +49,26 @@ function main_menu() {
     done
 }
 
-# 重启节点函数
-function restart_node() {
-    echo "正在重启节点进程..."
-
-    # 查找 executor 进程并终止
-    pkill -f executor
-
-    # 切换目录并执行脚本
-    echo "切换目录并执行 ./executor..."
-    cd ~/executor/executor/bin
-
-    # 设置环境变量
-    export NODE_ENV=testnet
-    export LOG_LEVEL=debug
-    export LOG_PRETTY=false
-    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
-    export EXECUTOR_MAX_L3_GAS_PRICE=100
-
-    # 新增的环境变量
-    export EXECUTOR_PROCESS_ORDERS=true
-    export EXECUTOR_PROCESS_CLAIMS=true
-
-    # 提示用户输入私钥
-    read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
-
-    # 设置私钥变量
-    export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
-
-    # 重定向日志输出
-    ./executor > "$LOGFILE" 2>&1 &
-
-    # 显示后台进程 PID
-    echo "executor 进程已重启，PID: $!"
-
-    echo "重启操作完成。"
-
-    # 提示用户按任意键返回主菜单
-    read -n 1 -s -r -p "按任意键返回主菜单..."
-    main_menu
-}
-
 # 执行脚本函数
 function execute_script() {
+    # 检查 pm2 是否安装，如果没有安装则自动安装
+    if ! command -v pm2 &> /dev/null; then
+        echo "pm2 未安装，正在安装 pm2..."
+        # 安装 pm2
+        sudo npm install -g pm2
+        if [ $? -eq 0 ]; then
+            echo "pm2 安装成功。"
+        else
+            echo "pm2 安装失败，请检查 npm 配置。"
+            exit 1
+        fi
+    else
+        echo "pm2 已安装，继续执行。"
+    fi
+
     # 下载文件
-    echo "正在下载 executor-linux-v0.29.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.29.0/executor-linux-v0.29.0.tar.gz
+    echo "正在下载 executor-linux-v0.32.0.tar.gz..."
+    wget https://github.com/t3rn/executor-release/releases/download/v0.32.0/executor-linux-v0.32.0.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
@@ -110,7 +80,7 @@ function execute_script() {
 
     # 解压文件到当前目录
     echo "正在解压文件..."
-    tar -xvzf executor-linux-v0.29.0.tar.gz
+    tar -xvzf executor-linux-v0.32.0.tar.gz
 
     # 检查解压是否成功
     if [ $? -eq 0 ]; then
@@ -129,11 +99,23 @@ function execute_script() {
         exit 1
     fi
 
+    # 提示用户输入环境变量的值，给 EXECUTOR_MAX_L3_GAS_PRICE 设置默认值为 100
+    read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
+    EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
+
+    # 提示用户输入其他环境变量的值
+    read -p "请输入 RPC_ENDPOINTS_OPSP 的值: " RPC_ENDPOINTS_OPSP
+    read -p "请输入 RPC_ENDPOINTS_BSSP 的值: " RPC_ENDPOINTS_BSSP
+
     # 设置环境变量
     export NODE_ENV=testnet
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
-    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l1rn'
+    export ENABLED_NETWORKS='base-sepolia,optimism-sepolia,l1rn'
+    export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+    export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
+    export RPC_ENDPOINTS_OPSP="$RPC_ENDPOINTS_OPSP"
+    export RPC_ENDPOINTS_BSSP="$RPC_ENDPOINTS_BSSP"
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
@@ -147,19 +129,20 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.29.0.tar.gz
+    rm executor-linux-v0.32.0.tar.gz
 
-    # 切换目录并执行脚本
-    echo "切换目录并执行 ./executor..."
+    # 切换目录到 executor/bin
+    echo "切换目录并准备使用 pm2 启动 executor..."
     cd ~/executor/executor/bin
 
-    # 重定向日志输出
-    ./executor > "$LOGFILE" 2>&1 &
+    # 使用 pm2 启动 executor
+    echo "通过 pm2 启动 executor..."
+    pm2 start ./executor --name "executor" --log "$LOGFILE" --env NODE_ENV=testnet
 
-    # 显示后台进程 PID
-    echo "executor 进程已启动，PID: $!"
+    # 显示 pm2 进程列表
+    pm2 list
 
-    echo "操作完成。"
+    echo "executor 已通过 pm2 启动。"
 
     # 提示用户按任意键返回主菜单
     read -n 1 -s -r -p "按任意键返回主菜单..."
@@ -180,10 +163,10 @@ function view_logs() {
 function delete_node() {
     echo "正在停止节点进程..."
 
-    # 查找 executor 进程并终止
-    pkill -f executor
+    # 使用 pm2 停止 executor 进程
+    pm2 stop "executor"
 
-    # 删除节点目录
+    # 删除 executor 所在的目录
     if [ -d "$EXECUTOR_DIR" ]; then
         echo "正在删除节点目录..."
         rm -rf "$EXECUTOR_DIR"
