@@ -118,12 +118,12 @@ function execute_script() {
     export ENABLED_NETWORKS='base-sepolia,optimism-sepolia,l1rn'
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
     export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
-    export RPC_ENDPOINTS_OPSP="$RPC_ENDPOINTS_OPSP"
-    export RPC_ENDPOINTS_BSSP="$RPC_ENDPOINTS_BSSP"
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
+    export RPC_ENDPOINTS_OPSP="$RPC_ENDPOINTS_OPSP"
+    export RPC_ENDPOINTS_BSSP="$RPC_ENDPOINTS_BSSP"
 
     # 提示用户输入私钥
     read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
@@ -133,7 +133,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.32.0.tar.gz
+    rm executor-linux-v0.29.0.tar.gz
 
     # 切换目录到 executor/bin
     echo "切换目录并准备使用 pm2 启动 executor..."
