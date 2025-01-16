@@ -134,8 +134,8 @@ function execute_script() {
     export EXECUTOR_PROCESS_CLAIMS=true
     export RPC_ENDPOINTS_OPSP="$RPC_ENDPOINTS_OPSP"
     export RPC_ENDPOINTS_BSSP="$RPC_ENDPOINTS_BSSP"
-    export RPC_ENDPOINTS_BLSS=
-    export RPC_ENDPOINTS_ARBT=
+    export RPC_ENDPOINTS_BLSS="$RPC_ENDPOINTS_BLSS"
+    export RPC_ENDPOINTS_ARBT="$RPC_ENDPOINTS_ARBT"
     
 
     # 提示用户输入私钥
