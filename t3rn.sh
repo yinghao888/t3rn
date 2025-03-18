@@ -66,9 +66,11 @@ function execute_script() {
         echo "pm2 已安装，继续执行。"
     fi
 
-    # 下载文件
-    echo "正在下载 executor-linux-v0.32.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.32.0/executor-linux-v0.32.0.tar.gz
+    # 下载最新版本的文件
+    echo "正在下载最新版本的 executor..."
+    curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
+    grep -Po '"tag_name": "\K.*?(?=")' | \
+    xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
 
     # 检查下载是否成功
     if [ $? -eq 0 ]; then
@@ -80,7 +82,7 @@ function execute_script() {
 
     # 解压文件到当前目录
     echo "正在解压文件..."
-    tar -xvzf executor-linux-v0.32.0.tar.gz
+    tar -xzf executor-linux-*.tar.gz
 
     # 检查解压是否成功
     if [ $? -eq 0 ]; then
@@ -103,40 +105,40 @@ function execute_script() {
     read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
     EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
 
-    # 提示用户输入 RPC_ENDPOINTS_OPSP，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_OPSP 的值 [默认 https://sepolia.optimism.io]: " RPC_ENDPOINTS_OPSP
-    RPC_ENDPOINTS_OPSP="${RPC_ENDPOINTS_OPSP:-https://sepolia.optimism.io}"
-
-    # 提示用户输入 RPC_ENDPOINTS_BSSP，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_BSSP 的值 [默认 https://sepolia.base.org]: " RPC_ENDPOINTS_BSSP
-    RPC_ENDPOINTS_BSSP="${RPC_ENDPOINTS_BSSP:-https://sepolia.base.org}"
-
-    # 提示用户输入 RPC_ENDPOINTS_BLSS，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_BLSS 的值 [默认 https://blessnet-sepolia-testnet.rpc.caldera.xyz/http]: " RPC_ENDPOINTS_BLSS
-    RPC_ENDPOINTS_BLSS="${RPC_ENDPOINTS_BLSS:-https://blessnet-sepolia-testnet.rpc.caldera.xyz/http}"
-
     # 提示用户输入 RPC_ENDPOINTS_ARBT，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_ARBT 的值 [默认 https://endpoints.omniatech.io/v1/arbitrum/sepolia/public]: " RPC_ENDPOINTS_ARBT
-    RPC_ENDPOINTS_ARBT="${RPC_ENDPOINTS_ARBT:-https://endpoints.omniatech.io/v1/arbitrum/sepolia/public}"
+    read -p "请输入 RPC_ENDPOINTS_ARBT 的值 [默认 https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc]: " RPC_ENDPOINTS_ARBT
+    RPC_ENDPOINTS_ARBT="${RPC_ENDPOINTS_ARBT:-https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc}"
 
-    
+    # 提示用户输入 RPC_ENDPOINTS_BAST，如果没有输入则使用默认值
+    read -p "请输入 RPC_ENDPOINTS_BAST 的值 [默认 https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org]: " RPC_ENDPOINTS_BAST
+    RPC_ENDPOINTS_BAST="${RPC_ENDPOINTS_BAST:-https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org}"
+
+    # 提示用户输入 RPC_ENDPOINTS_OPST，如果没有输入则使用默认值
+    read -p "请输入 RPC_ENDPOINTS_OPST 的值 [默认 https://sepolia.optimism.io, https://optimism-sepolia.drpc.org]: " RPC_ENDPOINTS_OPST
+    RPC_ENDPOINTS_OPST="${RPC_ENDPOINTS_OPST:-https://sepolia.optimism.io, https://optimism-sepolia.drpc.org}"
+
+    # 提示用户输入 RPC_ENDPOINTS_UNIT，如果没有输入则使用默认值
+    read -p "请输入 RPC_ENDPOINTS_UNIT 的值 [默认 https://unichain-sepolia.drpc.org, https://sepolia.unichain.org]: " RPC_ENDPOINTS_UNIT
+    RPC_ENDPOINTS_UNIT="${RPC_ENDPOINTS_UNIT:-https://unichain-sepolia.drpc.org, https://sepolia.unichain.org}"
 
     # 设置环境变量
     export NODE_ENV=testnet
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
-    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn'
+    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l2rn'
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
     export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
 
     # 新增的环境变量
     export EXECUTOR_PROCESS_ORDERS=true
     export EXECUTOR_PROCESS_CLAIMS=true
-    export RPC_ENDPOINTS_OPSP="$RPC_ENDPOINTS_OPSP"
-    export RPC_ENDPOINTS_BSSP="$RPC_ENDPOINTS_BSSP"
-    export RPC_ENDPOINTS_BLSS="$RPC_ENDPOINTS_BLSS"
-    export RPC_ENDPOINTS_ARBT="$RPC_ENDPOINTS_ARBT"
-    
+    export RPC_ENDPOINTS='{
+        "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+        "arbt": ["'"$RPC_ENDPOINTS_ARBT"'"],
+        "bast": ["'"$RPC_ENDPOINTS_BAST"'"],
+        "opst": ["'"$RPC_ENDPOINTS_OPST"'"],
+        "unit": ["'"$RPC_ENDPOINTS_UNIT"'"]
+    }'
 
     # 提示用户输入私钥
     read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
@@ -146,7 +148,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-v0.29.0.tar.gz
+    rm executor-linux-*.tar.gz
 
     # 切换目录到 executor/bin
     echo "切换目录并准备使用 pm2 启动 executor..."
@@ -165,6 +167,7 @@ function execute_script() {
     read -n 1 -s -r -p "按任意键返回主菜单..."
     main_menu
 }
+
 
 # 查看日志函数
 function view_logs() {
