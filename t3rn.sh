@@ -101,6 +101,10 @@ function execute_script() {
         exit 1
     fi
 
+    # 提示用户输入环境变量的值，给 EXECUTOR_MAX_L3_GAS_PRICE 设置默认值为 100
+    read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
+    EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
+
     # 设置环境变量
     export ENVIRONMENT=testnet
     export LOG_LEVEL=debug
