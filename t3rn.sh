@@ -101,38 +101,24 @@ function execute_script() {
         exit 1
     fi
 
-    # 提示用户输入环境变量的值，给 EXECUTOR_MAX_L3_GAS_PRICE 设置默认值为 100
-    read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
-    EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
-
-    # 提示用户输入 RPC_ENDPOINTS_ARBT，如果没有输入则使用默认值
-    read -p "请输入 RPC_ARB 的值 [默认 https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc]: " RPC_ENDPOINTS_ARBT
-    RPC_ENDPOINTS_ARBT="${RPC_ENDPOINTS_ARBT:-https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc}"
-
-    # 提示用户输入 RPC_ENDPOINTS_BAST，如果没有输入则使用默认值
-    read -p "请输入 RPC_BASE 的值 [默认 https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org]: " RPC_ENDPOINTS_BAST
-    RPC_ENDPOINTS_BAST="${RPC_ENDPOINTS_BAST:-https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org}"
-
-    # 提示用户输入 RPC_ENDPOINTS_OPST，如果没有输入则使用默认值
-    read -p "请输入 RPC_OP 的值 [默认 https://sepolia.optimism.io, https://optimism-sepolia.drpc.org]: " RPC_ENDPOINTS_OPST
-    RPC_ENDPOINTS_OPST="${RPC_ENDPOINTS_OPST:-https://sepolia.optimism.io, https://optimism-sepolia.drpc.org}"
-
     # 设置环境变量
-    export NODE_ENV=testnet
+    export ENVIRONMENT=testnet
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
-    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn'
+    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,unichain-sepolia,optimism-sepolia,l2rn'
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
     export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
 
     # 新增的环境变量
-    export EXECUTOR_PROCESS_ORDERS=true
-    export EXECUTOR_PROCESS_CLAIMS=true
+    export EXECUTOR_PROCESS_BIDS_ENABLED=true
+    export EXECUTOR_PROCESS_ORDERS_ENABLED=true
+    export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
     export RPC_ENDPOINTS='{
-        "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-        "arbt": ["'"$RPC_ENDPOINTS_ARBT"'"],
-        "bast": ["'"$RPC_ENDPOINTS_BAST"'"],
-        "opst": ["'"$RPC_ENDPOINTS_OPST"'"]
+    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
+    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
+    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
+    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
     }'
 
     # 提示用户输入私钥
