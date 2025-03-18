@@ -106,15 +106,15 @@ function execute_script() {
     EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
 
     # 提示用户输入 RPC_ENDPOINTS_ARBT，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_ARBT 的值 [默认 https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc]: " RPC_ENDPOINTS_ARBT
+    read -p "请输入 RPC_ARB 的值 [默认 https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc]: " RPC_ENDPOINTS_ARBT
     RPC_ENDPOINTS_ARBT="${RPC_ENDPOINTS_ARBT:-https://arbitrum-sepolia.drpc.org, https://sepolia-rollup.arbitrum.io/rpc}"
 
     # 提示用户输入 RPC_ENDPOINTS_BAST，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_BAST 的值 [默认 https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org]: " RPC_ENDPOINTS_BAST
+    read -p "请输入 RPC_BASE 的值 [默认 https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org]: " RPC_ENDPOINTS_BAST
     RPC_ENDPOINTS_BAST="${RPC_ENDPOINTS_BAST:-https://base-sepolia-rpc.publicnode.com, https://base-sepolia.drpc.org}"
 
     # 提示用户输入 RPC_ENDPOINTS_OPST，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_OPST 的值 [默认 https://sepolia.optimism.io, https://optimism-sepolia.drpc.org]: " RPC_ENDPOINTS_OPST
+    read -p "请输入 RPC_OP 的值 [默认 https://sepolia.optimism.io, https://optimism-sepolia.drpc.org]: " RPC_ENDPOINTS_OPST
     RPC_ENDPOINTS_OPST="${RPC_ENDPOINTS_OPST:-https://sepolia.optimism.io, https://optimism-sepolia.drpc.org}"
 
     # 设置环境变量
