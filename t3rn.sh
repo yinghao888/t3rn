@@ -117,15 +117,11 @@ function execute_script() {
     read -p "请输入 RPC_ENDPOINTS_OPST 的值 [默认 https://sepolia.optimism.io, https://optimism-sepolia.drpc.org]: " RPC_ENDPOINTS_OPST
     RPC_ENDPOINTS_OPST="${RPC_ENDPOINTS_OPST:-https://sepolia.optimism.io, https://optimism-sepolia.drpc.org}"
 
-    # 提示用户输入 RPC_ENDPOINTS_UNIT，如果没有输入则使用默认值
-    read -p "请输入 RPC_ENDPOINTS_UNIT 的值 [默认 https://unichain-sepolia.drpc.org, https://sepolia.unichain.org]: " RPC_ENDPOINTS_UNIT
-    RPC_ENDPOINTS_UNIT="${RPC_ENDPOINTS_UNIT:-https://unichain-sepolia.drpc.org, https://sepolia.unichain.org}"
-
     # 设置环境变量
     export NODE_ENV=testnet
     export LOG_LEVEL=debug
     export LOG_PRETTY=false
-    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l2rn'
+    export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn'
     export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
     export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
 
