@@ -132,8 +132,7 @@ function execute_script() {
         "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
         "arbt": ["'"$RPC_ENDPOINTS_ARBT"'"],
         "bast": ["'"$RPC_ENDPOINTS_BAST"'"],
-        "opst": ["'"$RPC_ENDPOINTS_OPST"'"],
-        "unit": ["'"$RPC_ENDPOINTS_UNIT"'"]
+        "opst": ["'"$RPC_ENDPOINTS_OPST"'"]
     }'
 
     # 提示用户输入私钥
