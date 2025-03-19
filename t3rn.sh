@@ -183,6 +183,7 @@ function delete_node() {
 
     # 使用 pm2 停止 executor 进程
     pm2 stop "executor"
+    pm2 delete "executor"
 
     # 删除 executor 所在的目录
     if [ -d "$EXECUTOR_DIR" ]; then
