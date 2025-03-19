@@ -54,7 +54,6 @@ function execute_script() {
     # 检查 pm2 是否安装，如果没有安装则自动安装
     if ! command -v pm2 &> /dev/null; then
         echo "pm2 未安装，正在安装 pm2..."
-        # 安装 pm2
         sudo npm install -g pm2
         if [ $? -eq 0 ]; then
             echo "pm2 安装成功。"
@@ -64,6 +63,21 @@ function execute_script() {
         fi
     else
         echo "pm2 已安装，继续执行。"
+    fi
+
+    # 检查 tar 是否安装，如果没有安装则自动安装
+    if ! command -v tar &> /dev/null; then
+        echo "tar 未安装，正在安装 tar..."
+        # 假设使用的是基于 Debian/Ubuntu 的系统
+        sudo apt-get update && sudo apt-get install -y tar
+        if [ $? -eq 0 ]; then
+            echo "tar 安装成功。"
+        else
+            echo "tar 安装失败，请检查包管理器配置。"
+            exit 1
+        fi
+    else
+        echo "tar 已安装，继续执行。"
     fi
 
     # 下载最新版本的文件
@@ -152,7 +166,6 @@ function execute_script() {
     read -n 1 -s -r -p "按任意键返回主菜单..."
     main_menu
 }
-
 
 # 查看日志函数
 function view_logs() {
