@@ -47,7 +47,6 @@ read -p "请输入 KEY ALCHEMY (留空使用默认公共RPC): " KEYALCHEMY
 
 # 判断用户是否输入了 KEYALCHEMY
 if [[ -n "$KEYALCHEMY" ]]; then
-    # 用户输入了 KEYALCHEMY，使用包含 Alchemy 的 RPC
     export RPC_ENDPOINTS='{
         "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
         "arbt": ["https://arb-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"],
@@ -56,7 +55,6 @@ if [[ -n "$KEYALCHEMY" ]]; then
         "unit": ["https://unichain-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"]
     }'
 else
-    # 用户未输入 KEYALCHEMY，使用默认的公共 RPC
     export RPC_ENDPOINTS='{
         "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
         "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
@@ -72,6 +70,19 @@ echo "$RPC_ENDPOINTS"
 
 read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
 export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
+
+# 设置环境变量
+export ENVIRONMENT=testnet
+export LOG_LEVEL=debug
+export LOG_PRETTY=false
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,unichain-sepolia,optimism-sepolia,l2rn'
+export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
+
+# 新增的环境变量
+export EXECUTOR_PROCESS_BIDS_ENABLED=true
+export EXECUTOR_PROCESS_ORDERS_ENABLED=true
+export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 
 # 进入 executor 目录并启动
 cd "$EXECUTOR_DIR/executor/bin" || { echo "切换目录失败"; exit 1; }
