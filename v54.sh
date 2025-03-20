@@ -42,6 +42,19 @@ fi
 read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
 EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
 
+# 设置环境变量
+export ENVIRONMENT=testnet
+export LOG_LEVEL=debug
+export LOG_PRETTY=false
+export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,unichain-sepolia,optimism-sepolia,l2rn'
+export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
+
+# 新增的环境变量
+export EXECUTOR_PROCESS_BIDS_ENABLED=true
+export EXECUTOR_PROCESS_ORDERS_ENABLED=true
+export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
+
 # 提示用户输入 Alchemy Key
 read -p "请输入 KEY ALCHEMY (留空使用默认公共RPC): " KEYALCHEMY
 
@@ -70,18 +83,6 @@ echo "$RPC_ENDPOINTS"
 
 read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
 export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
-
-# 设置环境变量
-export ENVIRONMENT=testnet
-export LOG_LEVEL=debug
-export LOG_PRETTY=false
-export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,unichain-sepolia,optimism-sepolia,l2rn'
-export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
-
-# 新增的环境变量
-export EXECUTOR_PROCESS_BIDS_ENABLED=true
-export EXECUTOR_PROCESS_ORDERS_ENABLED=true
-export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 
 # 进入 executor 目录并启动
 cd "$EXECUTOR_DIR/executor/bin" || { echo "切换目录失败"; exit 1; }
