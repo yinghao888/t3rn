@@ -42,19 +42,33 @@ fi
 read -p "请输入 EXECUTOR_MAX_L3_GAS_PRICE 的值 [默认 100]: " EXECUTOR_MAX_L3_GAS_PRICE
 EXECUTOR_MAX_L3_GAS_PRICE="${EXECUTOR_MAX_L3_GAS_PRICE:-100}"
 
-read -p "KEY ALCHEMY: " KEYALCHEMY
+# 提示用户输入 Alchemy Key
+read -p "请输入 KEY ALCHEMY (留空使用默认公共RPC): " KEYALCHEMY
 
-RPC_JSON=$(cat <<EOF
-{
-    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arb-sepolia.g.alchemy.com/v2/$KEYALCHEMY"],
-    "bast": ["https://base-sepolia.g.alchemy.com/v2/$KEYALCHEMY"],
-    "opst": ["https://opt-sepolia.g.alchemy.com/v2/$KEYALCHEMY"],
-    "unit": ["https://unichain-sepolia.g.alchemy.com/v2/$KEYALCHEMY"]
-}
-EOF
-)
-export RPC_ENDPOINTS="$RPC_JSON"
+# 判断用户是否输入了 KEYALCHEMY
+if [[ -n "$KEYALCHEMY" ]]; then
+    # 用户输入了 KEYALCHEMY，使用包含 Alchemy 的 RPC
+    export RPC_ENDPOINTS='{
+        "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+        "arbt": ["https://arb-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"],
+        "bast": ["https://base-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"],
+        "opst": ["https://opt-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"],
+        "unit": ["https://unichain-sepolia.g.alchemy.com/v2/'"$KEYALCHEMY"'"]
+    }'
+else
+    # 用户未输入 KEYALCHEMY，使用默认的公共 RPC
+    export RPC_ENDPOINTS='{
+        "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+        "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
+        "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
+        "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
+        "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
+    }'
+fi
+
+# 显示最终使用的 RPC
+echo "RPC_ENDPOINTS 已设置为:"
+echo "$RPC_ENDPOINTS"
 
 read -p "请输入 PRIVATE_KEY_LOCAL 的值: " PRIVATE_KEY_LOCAL
 export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
