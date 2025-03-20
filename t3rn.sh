@@ -21,12 +21,14 @@ function main_menu() {
         echo "================================================================"
         echo "退出脚本，请按键盘 ctrl + C 退出即可"
         echo "请选择要执行的操作:"
-        echo "1) 执行脚本"
+        echo "1) 执行脚本（最新版）"
         echo "2) 查看日志"
         echo "3) 删除节点"
-        echo "5) 退出"
+        echo "4) 安装 v53.sh"
+        echo "5) 安装 v56.sh"
+        echo "6) 退出"
         
-        read -p "请输入你的选择 [1-3]: " choice
+        read -p "请输入你的选择 [1-6]: " choice
         
         case $choice in
             1)
@@ -38,7 +40,13 @@ function main_menu() {
             3)
                 delete_node
                 ;;
+            4)
+                install_v53
+                ;;
             5)
+                install_v56
+                ;;
+            6)
                 echo "退出脚本。"
                 exit 0
                 ;;
@@ -195,6 +203,40 @@ function delete_node() {
     fi
 
     echo "节点删除操作完成。"
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
+}
+
+# 安装 v53.sh 函数
+function install_v53() {
+    echo "正在安装 v53.sh..."
+    # 假设 v53.sh 在当前目录下
+    chmod +x v53.sh
+    ./v53.sh
+    if [ $? -eq 0 ]; then
+        echo "v53.sh 安装成功。"
+    else
+        echo "v53.sh 安装失败，请检查脚本。"
+    fi
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
+}
+
+# 安装 v56.sh 函数
+function install_v56() {
+    echo "正在安装 v56.sh..."
+    # 假设 v56.sh 在当前目录下
+    chmod +x v56.sh
+    ./v56.sh
+    if [ $? -eq 0 ]; then
+        echo "v56.sh 安装成功。"
+    else
+        echo "v56.sh 安装失败，请检查脚本。"
+    fi
 
     # 提示用户按任意键返回主菜单
     read -n 1 -s -r -p "按任意键返回主菜单..."
