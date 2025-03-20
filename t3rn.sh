@@ -218,7 +218,7 @@ function delete_node() {
 }
 
 # 安装 v53.1.sh 函数
-function install_v53() {
+function install_v53.1() {
     echo "正在下载并安装 v53.1.sh..."
     wget -O v53.1.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v53.1.sh && sed -i 's/\r$//' v53.1.sh && chmod +x v53.1.sh && ./v53.1.sh
     if [ $? -eq 0 ]; then
