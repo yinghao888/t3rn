@@ -48,6 +48,7 @@ export LOG_LEVEL=debug
 export LOG_PRETTY=false
 export ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,unichain-sepolia,optimism-sepolia,l2rn'
 export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
 
 # 新增的环境变量
 export EXECUTOR_PROCESS_BIDS_ENABLED=true
