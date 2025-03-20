@@ -24,12 +24,13 @@ function main_menu() {
         echo "1) 执行脚本（最新版）"
         echo "2) 查看日志"
         echo "3) 删除节点"
-        echo "4) 安装 v53.sh"
-        echo "5) 安装 v54.sh"
-        echo "6) 安装 v56.sh"
-        echo "7) 退出"
+        echo "4) 安装 v53.1.sh"
+        echo "5) 安装 v53.sh"
+        echo "6) 安装 v54.sh"
+        echo "7) 安装 v56.sh"
+        echo "8) 退出"
         
-        read -p "请输入你的选择 [1-7]: " choice
+        read -p "请输入你的选择 [1-8]: " choice
         
         case $choice in
             1)
@@ -42,15 +43,18 @@ function main_menu() {
                 delete_node
                 ;;
             4)
-                install_v53
+                install_v53.1
                 ;;
             5)
-                install_v54
+                install_v53
                 ;;
             6)
-                install_v56
+                install_v54
                 ;;
             7)
+                install_v56
+                ;;
+            8)
                 echo "退出脚本。"
                 exit 0
                 ;;
@@ -212,6 +216,22 @@ function delete_node() {
     read -n 1 -s -r -p "按任意键返回主菜单..."
     main_menu
 }
+
+# 安装 v53.1.sh 函数
+function install_v53() {
+    echo "正在下载并安装 v53.1.sh..."
+    wget -O v53.1.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v53.1.sh && sed -i 's/\r$//' v53.1.sh && chmod +x v53.1.sh && ./v53.1.sh
+    if [ $? -eq 0 ]; then
+    echo "v53.sh 安装成功。"
+    else
+    echo "v53.sh 安装失败，请检查脚本。"
+    fi
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu
+}
+
 
 # 安装 v53.sh 函数
 function install_v53() {
