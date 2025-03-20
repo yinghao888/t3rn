@@ -212,7 +212,7 @@ function delete_node() {
 # 安装 v53.sh 函数
 function install_v53() {
     echo "正在下载并安装 v53.sh..."
-    wget -O v53.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v53.sh && chmod +x v53.sh && ./v53.sh
+    wget -O v53.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v53.sh && sed -i 's/\r$//' v53.sh && chmod +x v53.sh && ./v53.sh
     if [ $? -eq 0 ]; then
     echo "v53.sh 安装成功。"
     else
@@ -226,7 +226,7 @@ function install_v53() {
 
 # 安装 v56.sh 函数
 function install_v56() {
-    wget -O v56.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v56.sh && chmod +x v56.sh && ./v56.sh
+    wget -O v56.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v56.sh && sed -i 's/\r$//' v56.sh && chmod +x v56.sh && ./v56.sh
     if [ $? -eq 0 ]; then
     echo "v56.sh 安装成功。"
     else
