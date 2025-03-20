@@ -211,14 +211,12 @@ function delete_node() {
 
 # 安装 v53.sh 函数
 function install_v53() {
-    echo "正在安装 v53.sh..."
-    # 假设 v53.sh 在当前目录下
-    chmod +x v53.sh
-    ./v53.sh
+    echo "正在下载并安装 v53.sh..."
+    wget -O v53.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v53.sh && chmod +x v53.sh && ./v53.sh
     if [ $? -eq 0 ]; then
-        echo "v53.sh 安装成功。"
+    echo "v53.sh 安装成功。"
     else
-        echo "v53.sh 安装失败，请检查脚本。"
+    echo "v53.sh 安装失败，请检查脚本。"
     fi
 
     # 提示用户按任意键返回主菜单
@@ -228,14 +226,11 @@ function install_v53() {
 
 # 安装 v56.sh 函数
 function install_v56() {
-    echo "正在安装 v56.sh..."
-    # 假设 v56.sh 在当前目录下
-    chmod +x v56.sh
-    ./v56.sh
+    wget -O v56.sh https://raw.githubusercontent.com/sdohuajia/t3rn/refs/heads/main/v56.sh && chmod +x v56.sh && ./v56.sh
     if [ $? -eq 0 ]; then
-        echo "v56.sh 安装成功。"
+    echo "v56.sh 安装成功。"
     else
-        echo "v56.sh 安装失败，请检查脚本。"
+    echo "v56.sh 安装失败，请检查脚本。"
     fi
 
     # 提示用户按任意键返回主菜单
