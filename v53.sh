@@ -112,7 +112,7 @@ function execute_script() {
 
     # 删除压缩文件
     echo "删除压缩包..."
-    rm executor-linux-*.tar.gz
+    rm executor-linux-0.53.0.tar.gz
 
     # 切换目录到 executor/bin
     echo "切换目录并准备使用 pm2 启动 executor..."
