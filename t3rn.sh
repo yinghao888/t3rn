@@ -149,10 +149,10 @@ function execute_script() {
     export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
     export RPC_ENDPOINTS='{
     "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
-    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
-    "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
+    "arbt": ["https://arbitrum-sepolia.drpc.org/", "https://sepolia-rollup.arbitrum.io/rpc"],
+    "bast": ["https://base-sepolia.drpc.org/", "https://sepolia.base.org/"],
+    "opst": ["https://optimism-sepolia.drpc.org/ ", "https://optimism-sepolia-rpc.publicnode.com/"],
+    "unit": ["https://unichain-sepolia.drpc.org/", "https://sepolia.unichain.org"]
     }'
 
     # 提示用户输入私钥
