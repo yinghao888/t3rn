@@ -149,9 +149,9 @@ function execute_script() {
     export EXECUTOR_PROCESS_CLAIMS_ENABLED=true
     export RPC_ENDPOINTS='{
     "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org"],
-    "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org"],
+    "arbt": ["https://go.getblock.io/868382d71fcc4169bf248df24ffbfb83", "https://sepolia-rollup.arbitrum.io/rpc"],
+    "bast": ["https://go.getblock.io/13e7b716559a471c94e1d100dedb42c0", "https://base-sepolia.drpc.org"],
+    "opst": ["https://sepolia.optimism.io", "https://go.getblock.io/6a87203a95204612ad1a8e38e182055b"],
     "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org"]
     }'
 
